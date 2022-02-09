@@ -1,0 +1,13 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: vcluster
+spec:
+  serviceAccountName: ns-admin-sa
+  packageRef:
+    refName: vcluster.package.demo
+    versionSelection:
+      constraints: "0.5.3"
+  values:
+  - secretRef:
+      name: vcluster-vals

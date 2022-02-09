@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vcluster-vals
+stringData:
+  values.yaml: |
+    serviceCIDR: 10.96.0.0/12

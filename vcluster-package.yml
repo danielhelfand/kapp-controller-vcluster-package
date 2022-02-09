@@ -1,0 +1,39 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: vcluster.package.demo.0.5.3
+spec:
+  refName: vcluster.package.demo
+  version: 0.5.3
+  template:
+    spec:
+      fetch:
+        - helmChart:
+            name: vcluster
+            version: 0.5.3
+            repository:
+              url: https://charts.loft.sh
+
+      template:
+        - helmTemplate:
+            name: my-vcluster
+
+        - ytt:
+            ignoreUnknownComments: true
+            inline:
+              paths:
+                add-pvc-annotation.yml: |
+                  #@ load("@ytt:overlay", "overlay")
+                  #@overlay/match by=overlay.subset({"kind":"StatefulSet", "metadata":{"name":"my-vcluster"}}), expects=1
+                  ---
+                  spec:
+                    volumeClaimTemplates:
+                      #@overlay/match by=overlay.index(0)
+                      - metadata:
+                          name: data
+                          #@overlay/match missing_ok=True
+                          annotations:
+                            kapp.k14s.io/owned-for-deletion: ""
+
+      deploy:
+        - kapp: {}
