@@ -25,7 +25,7 @@ kapp deploy -a rbac -f rbac/ -n NAMESPACE_WHERE_PACKAGEINSTALL_WILL_BE_CREATED
 5. Deploy the PackageInstall to its destination namespace:
 
 ```
-kapp deploy -a vcluster -f vcluster-pkgi.yml -f vcluster-vales.yml -n NAMESPACE_WHERE_PACKAGEINSTALL_WILL_BE_CREATED
+kapp deploy -a vcluster -f vcluster-pkgi.yml -f vcluster-vals.yml -n NAMESPACE_WHERE_PACKAGEINSTALL_WILL_BE_CREATED
 ```
 
 6. Connect to the vcluster
